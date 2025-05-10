@@ -1,7 +1,8 @@
 <?php
-
 namespace App\Services\Clientes;
 
+use Throwable;
+use Exception;
 use App\Repositories\Clientes\ClienteRepository;
 
 class ClienteService
@@ -15,6 +16,11 @@ class ClienteService
 
     public function obtenerClientes()
     {
-        return $this->clienteRepository->obtenerTodos();
+        try {
+            $clientes = $this->clienteRepository->obtenerTodos();
+            return $clientes;
+        } catch (Throwable $e) {
+            throw new Exception("Error al obtener los clientes: " . $e->getMessage());
+        }
     }
 }
